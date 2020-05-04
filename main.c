@@ -10,6 +10,7 @@ void Push(struct ListNode **head_p, int data);
 void Pop(struct ListNode **head_p);
 int IsEmptyStack(struct ListNode *head_p);
 void PrintStack(struct ListNode *head);
+void DeleteStack(struct ListNode **head_p);
 
 int main(void){
 	struct ListNode **head_p;
@@ -18,9 +19,11 @@ int main(void){
 	head = NULL;
 
 	Push(head_p, 2);
+	Push(head_p, 3);
 	Push(head_p, 4);
 	Pop(head_p);
-	Pop(head_p);
+	PrintStack(head);
+	DeleteStack(head_p);
 	PrintStack(head);
 
 	return 0;
@@ -59,9 +62,21 @@ void PrintStack(struct ListNode *head){
 	if(!current){
 		printf("There is no stack\n");
 		return;
+	}else{
+		while(current != NULL){
+			printf("%d\n", current->data);
+			current = current->next;
+		}
 	}
-	while(current != NULL){
-		printf("%d\n", current->data);
-		current = current->next;
+}
+
+void DeleteStack(struct ListNode **head_p){
+	struct ListNode *p, *tmp;
+	p = *head_p;
+	while(p != NULL){
+		tmp = p;
+		p = p->next;
+		free(tmp);
 	}
+	*head_p = p;
 }
